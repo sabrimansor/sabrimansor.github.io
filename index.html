@@ -69,23 +69,23 @@
 <div class="container">    
   <div class="row">
     <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">Original</div>
-        <div class="panel-body"><video class="input_video"></video></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-sm-4"> 
       <div class="panel panel-danger">
-        <div class="panel-heading">Face Mesh</div>
-        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px"></canvas></div>
+        <div class="panel-heading">Original</div>
+        <div class="panel-body"><video class="input_video"  style="width: 100%;"></video></div>
         <div class="panel-footer"></div>
       </div>
     </div>
     <div class="col-sm-4"> 
-      <div class="panel panel-success">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Face Mesh</div>
+        <div class="panel-body"><canvas class="faceMesh_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
+        <div class="panel-footer"></div>
+      </div>
+    </div>
+    <div class="col-sm-4"> 
+      <div class="panel panel-primary">
         <div class="panel-heading">Face Detection</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="faceDetection_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
@@ -97,21 +97,21 @@
     <div class="col-sm-4">
       <div class="panel panel-primary">
         <div class="panel-heading">Hands</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
     <div class="col-sm-4"> 
       <div class="panel panel-primary">
         <div class="panel-heading">Holistic</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
     <div class="col-sm-4"> 
       <div class="panel panel-primary">
         <div class="panel-heading">Objectron</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
@@ -124,14 +124,14 @@
     <div class="col-sm-4">
       <div class="panel panel-primary">
         <div class="panel-heading">Pose</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
     <div class="col-sm-4"> 
       <div class="panel panel-primary">
         <div class="panel-heading">Selfie Segmentation</div>
-        <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
@@ -148,15 +148,15 @@
   
   
   <script type="module">
-    const videoElement = document.getElementsByClassName('input_video')[0];
-    const canvasElement = document.getElementsByClassName('output_canvas')[0];
-    const canvasCtx = canvasElement.getContext('2d');
+
+    const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
+    const faceMeshCtx = faceMeshElement.getContext('2d');
 
     function onResults(results) {
-      canvasCtx.save();
-      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
-      canvasCtx.drawImage(
-          results.image, 0, 0, canvasElement.width, canvasElement.height);
+      faceMeshCtx.save();
+      faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
+      faceMeshCtx.drawImage(
+          results.image, 0, 0, faceMeshElement.width, faceMeshElement.height);
       if (results.multiFaceLandmarks) {
         for (const landmarks of results.multiFaceLandmarks) {
           drawConnectors(canvasCtx, landmarks, FACEMESH_TESSELATION,
@@ -184,9 +184,93 @@
       minTrackingConfidence: 0.5
     });
     faceMesh.onResults(onResults);
+  </script>
+  
+  
+  
+  <script type="module">
 
+    const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
+    const faceMeshCtx = faceMeshElement.getContext('2d');
+
+    function onResults(results) {
+      faceMeshCtx.save();
+      faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
+      faceMeshCtx.drawImage(
+          results.image, 0, 0, faceMeshElement.width, faceMeshElement.height);
+      if (results.multiFaceLandmarks) {
+        for (const landmarks of results.multiFaceLandmarks) {
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_TESSELATION,
+                         {color: '#C0C0C070', lineWidth: 1});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
+        }
+      }
+      faceMeshCtx.restore();
+    }
+
+    const faceMesh = new FaceMesh({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+    }});
+    faceMesh.setOptions({
+      maxNumFaces: 1,
+      refineLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    faceMesh.onResults(onResults);
+  </script>
+  
+  
+  
+  
+  <script type="module">
+
+    const faceDetectionElement = document.getElementsByClassName('faceDetection_canvas')[0];
+    const faceDetectionCtx = faceDetectionElement.getContext('2d');
+
+    function onResults(results) {
+      // Draw the overlays.
+      faceDetectionCtx.save();
+      faceDetectionCtx.clearRect(0, 0, faceDetectionElement.width, faceDetectionElement.height);
+      faceDetectionCtx.drawImage(
+          results.image, 0, 0, faceDetectionElement.width, faceDetectionElement.height);
+      if (results.detections.length > 0) {
+        drawingUtils.drawRectangle(
+            faceDetectionCtx, results.detections[0].boundingBox,
+            {color: 'blue', lineWidth: 4, fillColor: '#00000000'});
+        drawingUtils.drawLandmarks(faceDetectionCtx, results.detections[0].landmarks, {
+          color: 'red',
+          radius: 5,
+        });
+      }
+      faceDetectionCtx.restore();
+    }
+
+    const faceDetection = new FaceDetection({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/${file}`;
+    }});
+    faceDetection.setOptions({
+      modelSelection: 0,
+      minDetectionConfidence: 0.5
+    });
+    faceDetection.onResults(onResults);
+
+    
+    
+  </script>
+    
+  <script type="module">
+    const videoElement = document.getElementsByClassName('input_video')[0];
     const camera = new Camera(videoElement, {
       onFrame: async () => {
+        await faceDetection.send({image: videoElement});
         await faceMesh.send({image: videoElement});
       },
       width: 1280,
@@ -194,5 +278,9 @@
     });
     camera.start();
   </script>
+  
+  
+  
+  
 </body>
 </html>
