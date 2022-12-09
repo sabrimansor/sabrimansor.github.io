@@ -40,7 +40,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
   
-  <script type="module">
+  <script>
 
     const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
     const faceMeshCtx = faceMeshElement.getContext('2d');
@@ -196,7 +196,7 @@
   <div class="profile-section" style="text-align: center;">
     <h2>Select a Feature:</h2>
     <form>
-      <select id="select_usecase" onchange="changeUseCase()">
+      <select id="select_usecase" onchange="changeUseCase();">
           <option value="faceMesh" selected>Face Mesh</option>
           <option value="faceDetection">Face Detection</option>
           <option value="hands" disabled>Hands</option>
