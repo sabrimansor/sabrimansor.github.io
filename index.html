@@ -65,11 +65,12 @@
       <li>Always programming</li>
     </ul>
   </div>
-  <div class="profile-section">
+  <div class="profile-section" style="text-align: center;">
+    <h2>Select a Feature:</h2>
     <form>
       <select id="select_usecase" onchange="changeUseCase()">
           <option value="faceMesh" selected>Face Mesh</option>
-          <option value="faceDetection" disabled>Face Detection</option>
+          <option value="faceDetection">Face Detection</option>
           <option value="hands" disabled>Hands</option>
           <option value="holistic" disabled>Holistic</option>
           <option value="objectron">Objectron</option>
@@ -244,11 +245,9 @@
       if (!!results.objectDetections) {
         for (const detectedObject of results.objectDetections) {
           // Reformat keypoint information as landmarks, for easy drawing.
-          const landmarks: mpObjectron.Point2D[] =
-              detectedObject.keypoints.map(x => x.point2d);
+          const landmarks: mpObjectron.Point2D[] = detectedObject.keypoints.map(x => x.point2d);
           // Draw bounding box.
-          drawingUtils.drawConnectors(objectronCtx, landmarks,
-              mpObjectron.BOX_CONNECTIONS, {color: '#FF0000'});
+          drawingUtils.drawConnectors(objectronCtx, landmarks, mpObjectron.BOX_CONNECTIONS, {color: '#FF0000'});
           // Draw centroid.
           drawingUtils.drawLandmarks(objectronCtx, [landmarks[0]], {color: '#FFFFFF'});
         }
