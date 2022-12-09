@@ -149,18 +149,23 @@
     function changeUseCase(){
       
       var usecase = document.getElementById("select_usecase").value;
+      var videoElement = document.getElementsByClassName('input_video')[0];
       
-      const videoElement = document.getElementsByClassName('input_video')[0];
+      console.log("Selected Usecase: ", usecase)
       if(usecase == "faceMesh"){
-          const camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
+          var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
+          camera.start();
       }else if(usecase == "faceDetection"){
-          const camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
+          var camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
+          camera.start();
       }else if(usecase == "objectron"){
-          const camera = new Camera(videoElement, { onFrame: async () => { await objectron.send({image: videoElement});}, width: 1280, height: 720 });
+          var camera = new Camera(videoElement, { onFrame: async () => { await objectron.send({image: videoElement});}, width: 1280, height: 720 });
+          camera.start();
       }else if(usecase == "selfieSegmentation"){
-          const camera = new Camera(videoElement, { onFrame: async () => { await selfieSegmentation.send({image: videoElement});}, width: 1280, height: 720 });
+          var camera = new Camera(videoElement, { onFrame: async () => { await selfieSegmentation.send({image: videoElement});}, width: 1280, height: 720 });
+          camera.start();
       }
-      camera.start();
+
     }
     
     changeUseCase();
