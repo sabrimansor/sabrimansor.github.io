@@ -40,149 +40,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
   
-  <script>
-
-    const videoElement = document.getElementsByClassName('input_video')[0];
-
-    function onFMResults(results) {
-      
-      var faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
-      var faceMeshCtx = faceMeshElement.getContext('2d');
-      
-      faceMeshCtx.save();
-      faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
-      faceMeshCtx.drawImage(
-          results.image, 0, 0, faceMeshElement.width, faceMeshElement.height);
-      if (results.multiFaceLandmarks) {
-        for (const landmarks of results.multiFaceLandmarks) {
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_TESSELATION,
-                         {color: '#C0C0C070', lineWidth: 1});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
-        }
-      }
-      faceMeshCtx.restore();
-    }
-
-    function init_faceMesh(){
-        const faceMesh = new FaceMesh({locateFile: (file) => {
-          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-        }});
-        faceMesh.setOptions({
-          maxNumFaces: 1,
-          refineLandmarks: true,
-          minDetectionConfidence: 0.5,
-          minTrackingConfidence: 0.5
-        });
-        faceMesh.onResults(onFMResults);
-      
-
-        var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
-        camera.start();
-    }
-
-
-
-    function onFDResults(results) {
-   
-      var faceDetectionElement = document.getElementsByClassName('faceDetection_canvas')[0];
-      var faceDetectionCtx = faceDetectionElement.getContext('2d');
-
-      // Draw the overlays.
-      faceDetectionCtx.save();
-      faceDetectionCtx.clearRect(0, 0, faceDetectionElement.width, faceDetectionElement.height);
-      faceDetectionCtx.drawImage(
-          results.image, 0, 0, faceDetectionElement.width, faceDetectionElement.height);
-      if (results.detections.length > 0) {
-        drawingUtils.drawRectangle(
-            faceDetectionCtx, results.detections[0].boundingBox,
-            {color: 'blue', lineWidth: 4, fillColor: '#00000000'});
-        drawingUtils.drawLandmarks(faceDetectionCtx, results.detections[0].landmarks, {
-          color: 'red',
-          radius: 5,
-        });
-      }
-      faceDetectionCtx.restore();
-    }
-
-    function init_faceDetection(){
-        const faceDetection = new FaceDetection({locateFile: (file) => {
-          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/${file}`;
-        }});
-        faceDetection.setOptions({
-          modelSelection: 0,
-          minDetectionConfidence: 0.5
-        });
-        faceDetection.onResults(onFDResults);
-      
-        var camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
-        camera.start();
-    }
-
-    function onSSResults(results) {
-      
-        var selfieSegmentationElement = document.getElementsByClassName('selfieSegmentation_canvas')[0];
-        var selfieSegmentationCtx = selfieSegmentationElement.getContext('2d');
-
-        selfieSegmentationCtx.save();
-        selfieSegmentationCtx.clearRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
-        selfieSegmentationCtx.drawImage(results.segmentationMask, 0, 0,
-                            selfieSegmentationElement.width, selfieSegmentationElement.height);
-
-        // Only overwrite existing pixels.
-        selfieSegmentationCtx.globalCompositeOperation = 'source-in';
-        selfieSegmentationCtx.fillStyle = '#00FF00';
-        selfieSegmentationCtx.fillRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
-
-        // Only overwrite missing pixels.
-        selfieSegmentationCtx.globalCompositeOperation = 'destination-atop';
-        selfieSegmentationCtx.drawImage(
-            results.image, 0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
-
-        selfieSegmentationCtx.restore();
-    }
-    
-    function init_selfieSegmentation(){
-
-      const selfieSegmentation = new SelfieSegmentation({locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
-      }});
-      selfieSegmentation.setOptions({
-        modelSelection: 1,
-      });
-      selfieSegmentation.onResults(onSSResults);
-      
-      var camera = new Camera(videoElement, { onFrame: async () => { await selfieSegmentation.send({image: videoElement});}, width: 1280, height: 720 });
-      camera.start();
-      
-    }
-    
-    
-    
-    
-    function changeUseCase(){
-      
-      var usecase = document.getElementById("select_usecase").value;
-      console.log("Selected Usecase: ", usecase)
-      
-      if(usecase == "faceMesh"){
-          init_faceMesh();
-      }else if(usecase == "faceDetection"){
-          init_faceDetection();
-      }else if(usecase == "selfieSegmentation"){
-          init_selfieSegmentation();
-      }
-
-    }
-    
-    changeUseCase();
-  </script>
 </head>
 <body>
   <div class="profile-section">
@@ -207,98 +64,76 @@
     </ul>
   </div>
   <div class="profile-section" style="text-align: center;">
-    <h2>Select a Feature:</h2>
-    <form>
-      <select id="select_usecase" onchange="changeUseCase();">
-          <option value="faceMesh" selected>Face Mesh</option>
-          <option value="faceDetection">Face Detection</option>
-          <option value="hands" disabled>Hands</option>
-          <option value="holistic" disabled>Holistic</option>
-          <option value="objectron" disabled>Objectron</option>
-          <option value="pose" disabled>Pose</option>
-          <option value="selfieSegmentation">Selfie Segmentation</option>
-      </select>
-    </form>
-    
+    <h2>Checkout this Face Mesh Demo</h2>
   </div>
   
   
 <div class="container">    
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-sm-6">
       <div class="panel panel-danger">
         <div class="panel-heading">Original</div>
         <div class="panel-body"><video class="input_video"  style="width: 100%;"></video></div>
         <div class="panel-footer"></div>
       </div>
     </div>
-    <div class="col-sm-4"> 
+    <div class="col-sm-6"> 
       <div class="panel panel-primary">
         <div class="panel-heading">Face Mesh</div>
         <div class="panel-body"><canvas class="faceMesh_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading">Face Detection</div>
-        <div class="panel-body"><canvas class="faceDetection_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-  </div>
-</div><br>
-
-<div class="container">    
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">Hands</div>
-        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading">Holistic</div>
-        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading">Objectron</div>
-        <div class="panel-body"><canvas class="objectron_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-  </div>
-</div><br>
-  
-
-<div class="container">    
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">Pose</div>
-        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-sm-4"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading">Selfie Segmentation</div>
-        <div class="panel-body"><canvas class="selfieSegmentation_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-    <div class="col-sm-4"> 
-    </div>
   </div>
 </div><br><br>
 
   
   
+  <script>
+
+    const videoElement = document.getElementsByClassName('input_video')[0];  
+    const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
+    const faceMeshCtx = faceMeshElement.getContext('2d');
+
+    function onFMResults(results) {
+
+      
+      faceMeshCtx.save();
+      faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
+      faceMeshCtx.drawImage(
+          results.image, 0, 0, faceMeshElement.width, faceMeshElement.height);
+      if (results.multiFaceLandmarks) {
+        for (const landmarks of results.multiFaceLandmarks) {
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_TESSELATION,
+                         {color: '#C0C0C070', lineWidth: 1});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF3030'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
+          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
+        }
+      }
+      faceMeshCtx.restore();
+    }
+
+    const faceMesh = new FaceMesh({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+    }});
+    faceMesh.setOptions({
+      maxNumFaces: 1,
+      refineLandmarks: true,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5
+    });
+    faceMesh.onResults(onFMResults);
+
+
+    var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
+    camera.start();
+  </script>
   
   
   
