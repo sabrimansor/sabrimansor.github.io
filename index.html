@@ -42,6 +42,8 @@
   
   <script>
 
+    const videoElement = document.getElementsByClassName('input_video')[0];
+    
     const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
     const faceMeshCtx = faceMeshElement.getContext('2d');
 
@@ -67,16 +69,22 @@
       faceMeshCtx.restore();
     }
 
-    const faceMesh = new FaceMesh({locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-    }});
-    faceMesh.setOptions({
-      maxNumFaces: 1,
-      refineLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    });
-    faceMesh.onResults(onFMResults);
+    function init_faceMesh(){
+        const faceMesh = new FaceMesh({locateFile: (file) => {
+          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+        }});
+        faceMesh.setOptions({
+          maxNumFaces: 1,
+          refineLandmarks: true,
+          minDetectionConfidence: 0.5,
+          minTrackingConfidence: 0.5
+        });
+        faceMesh.onResults(onFMResults);
+      
+
+        var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
+        camera.start();
+    }
 
     
 
@@ -101,47 +109,57 @@
       faceDetectionCtx.restore();
     }
 
-    const faceDetection = new FaceDetection({locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/${file}`;
-    }});
-    faceDetection.setOptions({
-      modelSelection: 0,
-      minDetectionConfidence: 0.5
-    });
-    faceDetection.onResults(onFDResults);
-    
+    function init_faceDetection(){
+        const faceDetection = new FaceDetection({locateFile: (file) => {
+          return `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.0/${file}`;
+        }});
+        faceDetection.setOptions({
+          modelSelection: 0,
+          minDetectionConfidence: 0.5
+        });
+        faceDetection.onResults(onFDResults);
+      
+        var camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
+        camera.start();
+    }
 
-    
+
     const selfieSegmentationElement = document.getElementsByClassName('selfieSegmentation_canvas')[0];
     const selfieSegmentationCtx = selfieSegmentationElement.getContext('2d');
 
     function onSSResults(results) {
-      selfieSegmentationCtx.save();
-      selfieSegmentationCtx.clearRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
-      selfieSegmentationCtx.drawImage(results.segmentationMask, 0, 0,
-                          selfieSegmentationElement.width, selfieSegmentationElement.height);
+        selfieSegmentationCtx.save();
+        selfieSegmentationCtx.clearRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
+        selfieSegmentationCtx.drawImage(results.segmentationMask, 0, 0,
+                            selfieSegmentationElement.width, selfieSegmentationElement.height);
 
-      // Only overwrite existing pixels.
-      selfieSegmentationCtx.globalCompositeOperation = 'source-in';
-      selfieSegmentationCtx.fillStyle = '#00FF00';
-      selfieSegmentationCtx.fillRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
+        // Only overwrite existing pixels.
+        selfieSegmentationCtx.globalCompositeOperation = 'source-in';
+        selfieSegmentationCtx.fillStyle = '#00FF00';
+        selfieSegmentationCtx.fillRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
 
-      // Only overwrite missing pixels.
-      selfieSegmentationCtx.globalCompositeOperation = 'destination-atop';
-      selfieSegmentationCtx.drawImage(
-          results.image, 0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
+        // Only overwrite missing pixels.
+        selfieSegmentationCtx.globalCompositeOperation = 'destination-atop';
+        selfieSegmentationCtx.drawImage(
+            results.image, 0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
 
-      selfieSegmentationCtx.restore();
+        selfieSegmentationCtx.restore();
     }
+    
+    function init_selfieSegmentation(){
 
-    const selfieSegmentation = new SelfieSegmentation({locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
-    }});
-    selfieSegmentation.setOptions({
-      modelSelection: 1,
-    });
-    selfieSegmentation.onResults(onSSResults);
-
+      const selfieSegmentation = new SelfieSegmentation({locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`;
+      }});
+      selfieSegmentation.setOptions({
+        modelSelection: 1,
+      });
+      selfieSegmentation.onResults(onSSResults);
+      
+      var camera = new Camera(videoElement, { onFrame: async () => { await selfieSegmentation.send({image: videoElement});}, width: 1280, height: 720 });
+      camera.start();
+      
+    }
     
     
     
@@ -149,21 +167,14 @@
     function changeUseCase(){
       
       var usecase = document.getElementById("select_usecase").value;
-      var videoElement = document.getElementsByClassName('input_video')[0];
-      
       console.log("Selected Usecase: ", usecase)
+      
       if(usecase == "faceMesh"){
-          var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
-          camera.start();
+          init_faceMesh();
       }else if(usecase == "faceDetection"){
-          var camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
-          camera.start();
-      }else if(usecase == "objectron"){
-          var camera = new Camera(videoElement, { onFrame: async () => { await objectron.send({image: videoElement});}, width: 1280, height: 720 });
-          camera.start();
+          init_faceDetection();
       }else if(usecase == "selfieSegmentation"){
-          var camera = new Camera(videoElement, { onFrame: async () => { await selfieSegmentation.send({image: videoElement});}, width: 1280, height: 720 });
-          camera.start();
+          init_selfieSegmentation();
       }
 
     }
