@@ -153,7 +153,7 @@
     const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
     const faceMeshCtx = faceMeshElement.getContext('2d');
 
-    function onResults(results) {
+    function onFMResults(results) {
       faceMeshCtx.save();
       faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
       faceMeshCtx.drawImage(
@@ -184,14 +184,14 @@
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5
     });
-    faceMesh.onResults(onResults);
+    faceMesh.onResults(onFMResults);
 
     
 
     const faceDetectionElement = document.getElementsByClassName('faceDetection_canvas')[0];
     const faceDetectionCtx = faceDetectionElement.getContext('2d');
 
-    function onResults(results) {
+    function onFDResults(results) {
       // Draw the overlays.
       faceDetectionCtx.save();
       faceDetectionCtx.clearRect(0, 0, faceDetectionElement.width, faceDetectionElement.height);
@@ -216,7 +216,7 @@
       modelSelection: 0,
       minDetectionConfidence: 0.5
     });
-    faceDetection.onResults(onResults);
+    faceDetection.onResults(onFDResults);
 
     
 
