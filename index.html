@@ -39,6 +39,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
 
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils_3d/control_utils_3d.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/objectron/objectron.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
   <div class="profile-section">
@@ -69,7 +72,7 @@
           <option value="faceDetection" disabled>Face Detection</option>
           <option value="hands" disabled>Hands</option>
           <option value="holistic" disabled>Holistic</option>
-          <option value="objectron" disabled>Objectron</option>
+          <option value="objectron">Objectron</option>
           <option value="pose" disabled>Pose</option>
           <option value="selfieSegmentation" disabled>Selfie Segmentation</option>
       </select>
@@ -123,7 +126,7 @@
     <div class="col-sm-4"> 
       <div class="panel panel-primary">
         <div class="panel-heading">Objectron</div>
-        <div class="panel-body"><canvas class="output_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
+        <div class="panel-body"><canvas class="objectron_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
         <div class="panel-footer"></div>
       </div>
     </div>
@@ -231,7 +234,42 @@
     
 
     
-    funtion changeUseCase(){
+    const objectronElement = document.getElementsByClassName('objectron_canvas')[0];
+    const objectronCtx = objectronElement.getContext('2d');
+
+    function onObjtrnResults(results) {
+      objectronCtx.save();
+      objectronCtx.drawImage(
+          results.image, 0, 0, objectronElement.width, objectronElement.height);
+      if (!!results.objectDetections) {
+        for (const detectedObject of results.objectDetections) {
+          // Reformat keypoint information as landmarks, for easy drawing.
+          const landmarks: mpObjectron.Point2D[] =
+              detectedObject.keypoints.map(x => x.point2d);
+          // Draw bounding box.
+          drawingUtils.drawConnectors(objectronCtx, landmarks,
+              mpObjectron.BOX_CONNECTIONS, {color: '#FF0000'});
+          // Draw centroid.
+          drawingUtils.drawLandmarks(objectronCtx, [landmarks[0]], {color: '#FFFFFF'});
+        }
+      }
+      objectronCtx.restore();
+    }
+
+    const objectron = new Objectron({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/objectron/${file}`;
+    }});
+    objectron.setOptions({
+      modelName: 'Chair',
+      maxNumObjects: 3,
+    });
+    objectron.onResults(onObjtrnResults);
+
+    
+    
+    
+    
+    function changeUseCase(){
       
       var usecase = document.getElementById("select_usecase").value;
       
@@ -240,6 +278,8 @@
           const camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
       }else if(usecase == "faceDetection"){
           const camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
+      }else if(){
+          const camera = new Camera(videoElement, { onFrame: async () => { await objectron.send({image: videoElement});}, width: 1280, height: 720 });
       }
       camera.start();
     }
