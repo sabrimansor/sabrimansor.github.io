@@ -43,11 +43,12 @@
   <script>
 
     const videoElement = document.getElementsByClassName('input_video')[0];
-    
-    const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
-    const faceMeshCtx = faceMeshElement.getContext('2d');
 
     function onFMResults(results) {
+      
+      var faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
+      var faceMeshCtx = faceMeshElement.getContext('2d');
+      
       faceMeshCtx.save();
       faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
       faceMeshCtx.drawImage(
@@ -86,12 +87,13 @@
         camera.start();
     }
 
-    
 
-    const faceDetectionElement = document.getElementsByClassName('faceDetection_canvas')[0];
-    const faceDetectionCtx = faceDetectionElement.getContext('2d');
 
     function onFDResults(results) {
+   
+      var faceDetectionElement = document.getElementsByClassName('faceDetection_canvas')[0];
+      var faceDetectionCtx = faceDetectionElement.getContext('2d');
+
       // Draw the overlays.
       faceDetectionCtx.save();
       faceDetectionCtx.clearRect(0, 0, faceDetectionElement.width, faceDetectionElement.height);
@@ -123,11 +125,11 @@
         camera.start();
     }
 
-
-    const selfieSegmentationElement = document.getElementsByClassName('selfieSegmentation_canvas')[0];
-    const selfieSegmentationCtx = selfieSegmentationElement.getContext('2d');
-
     function onSSResults(results) {
+      
+        var selfieSegmentationElement = document.getElementsByClassName('selfieSegmentation_canvas')[0];
+        var selfieSegmentationCtx = selfieSegmentationElement.getContext('2d');
+
         selfieSegmentationCtx.save();
         selfieSegmentationCtx.clearRect(0, 0, selfieSegmentationElement.width, selfieSegmentationElement.height);
         selfieSegmentationCtx.drawImage(results.segmentationMask, 0, 0,
