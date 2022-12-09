@@ -16,6 +16,7 @@
     }
     .profile-section h2 {
       font-size: 16px;
+      font-weight: bold;
       margin-bottom: 10px;
     }
     .profile-section p {
@@ -62,7 +63,17 @@
     </ul>
   </div>
   <div class="profile-section">
-    
+    <form>
+      <select id="select_usecase" onchange="changeUseCase()">
+          <option value="faceMesh" selected>Face Mesh</option>
+          <option value="faceDetection" disabled>Face Detection</option>
+          <option value="hands" disabled>Hands</option>
+          <option value="holistic" disabled>Holistic</option>
+          <option value="objectron" disabled>Objectron</option>
+          <option value="pose" disabled>Pose</option>
+          <option value="selfieSegmentation" disabled>Selfie Segmentation</option>
+      </select>
+    </form>
     
   </div>
   
@@ -217,19 +228,23 @@
       minDetectionConfidence: 0.5
     });
     faceDetection.onResults(onFDResults);
-
     
 
-    const videoElement = document.getElementsByClassName('input_video')[0];
-    const camera = new Camera(videoElement, {
-      onFrame: async () => {
-        await faceMesh.send({image: videoElement});
-        await faceDetection.send({image: videoElement});
-      },
-      width: 1280,
-      height: 720
-    });
-    camera.start();
+    
+    funtion changeUseCase(){
+      
+      var usecase = document.getElementById("select_usecase").value;
+      
+      const videoElement = document.getElementsByClassName('input_video')[0];
+      if(usecase == "faceMesh"){
+          const camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
+      }else if(usecase == "faceDetection"){
+          const camera = new Camera(videoElement, { onFrame: async () => { await faceDetection.send({image: videoElement});}, width: 1280, height: 720 });
+      }
+      camera.start();
+    }
+    
+    changeUseCase();
   </script>
   
   
