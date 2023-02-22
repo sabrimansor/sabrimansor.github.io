@@ -1,0 +1,42 @@
+.image {
+    width: 150px;
+    height: 150px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.body-container {
+    max-width: 690px;
+    margin: 0 auto;
+    min-width: 350px;
+}
+
+.scroller {
+  max-width: 690px;
+  z-index: 2;
+}
+
+.scroller ul {
+    padding: 0px;
+    margin: 0px;
+    overflow: scroll;
+}
+
+.scroller ul li {
+    list-style-type: none;
+    white-space: nowrap;
+}
+.nav-tabs>li {
+    float: unset;
+    margin-bottom: 0;
+}
+.nav>li {
+    position: relative;
+    display: table-cell;
+}
+.nav-tabs>li>a {
+    border-radius: 0;
+}
+.tab-pane {
+    padding: 20px 30px;
+}

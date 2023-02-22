@@ -1,141 +1,634 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>My Profile</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    .profile-section {
-      margin: 20px;
-    }
-    .profile-section h2 {
-      font-size: 16px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    .profile-section p {
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-    .profile-section ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-    .profile-section li {
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
-  
+    <title>Sabri Bin Mansor | My Learning Journey</title>
+    <link href="https://sabribinmansor.s3.ap-southeast-1.amazonaws.com/favicon/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="This website started as an initiative for me to practise what I have learnt about web development. It also includes my experience with other technologies, exploring the realm of data science, tinkering and making stuffs, and other personal adventures." />
+	
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel='stylesheet'/>
+	
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="css/timeline.css">
+	
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+		 .particle {
+			 position: absolute;
+			 border-radius: 50%;
+		}
+		 @keyframes particle-animation-1 {
+			 100% {
+				 transform: translate3d(82vw, 63vh, 39px);
+			}
+		}
+		 .particle:nth-child(1) {
+			 animation: particle-animation-1 60s infinite;
+			 opacity: 0.4;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -0.2s;
+			 transform: translate3d(78vw, 79vh, 2px);
+			 background: #6b26d9;
+		}
+		 @keyframes particle-animation-2 {
+			 100% {
+				 transform: translate3d(44vw, 63vh, 84px);
+			}
+		}
+		 .particle:nth-child(2) {
+			 animation: particle-animation-2 60s infinite;
+			 opacity: 0.31;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -0.4s;
+			 transform: translate3d(79vw, 57vh, 9px);
+			 background: #2fd926;
+		}
+		 @keyframes particle-animation-3 {
+			 100% {
+				 transform: translate3d(84vw, 23vh, 24px);
+			}
+		}
+		 .particle:nth-child(3) {
+			 animation: particle-animation-3 60s infinite;
+			 opacity: 1;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -0.6s;
+			 transform: translate3d(48vw, 45vh, 45px);
+			 background: #5cd926;
+		}
+		 @keyframes particle-animation-4 {
+			 100% {
+				 transform: translate3d(66vw, 39vh, 50px);
+			}
+		}
+		 .particle:nth-child(4) {
+			 animation: particle-animation-4 60s infinite;
+			 opacity: 0.39;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -0.8s;
+			 transform: translate3d(67vw, 47vh, 9px);
+			 background: #b826d9;
+		}
+		 @keyframes particle-animation-5 {
+			 100% {
+				 transform: translate3d(41vw, 28vh, 77px);
+			}
+		}
+		 .particle:nth-child(5) {
+			 animation: particle-animation-5 60s infinite;
+			 opacity: 0.73;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -1s;
+			 transform: translate3d(26vw, 49vh, 25px);
+			 background: #d926bb;
+		}
+		 @keyframes particle-animation-6 {
+			 100% {
+				 transform: translate3d(4vw, 31vh, 31px);
+			}
+		}
+		 .particle:nth-child(6) {
+			 animation: particle-animation-6 60s infinite;
+			 opacity: 0.85;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -1.2s;
+			 transform: translate3d(19vw, 4vh, 10px);
+			 background: #26cdd9;
+		}
+		 @keyframes particle-animation-7 {
+			 100% {
+				 transform: translate3d(7vw, 41vh, 32px);
+			}
+		}
+		 .particle:nth-child(7) {
+			 animation: particle-animation-7 60s infinite;
+			 opacity: 0.75;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -1.4s;
+			 transform: translate3d(75vw, 32vh, 77px);
+			 background: #8026d9;
+		}
+		 @keyframes particle-animation-8 {
+			 100% {
+				 transform: translate3d(71vw, 81vh, 50px);
+			}
+		}
+		 .particle:nth-child(8) {
+			 animation: particle-animation-8 60s infinite;
+			 opacity: 0.24;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -1.6s;
+			 transform: translate3d(77vw, 8vh, 9px);
+			 background: #d92685;
+		}
+		 @keyframes particle-animation-9 {
+			 100% {
+				 transform: translate3d(32vw, 89vh, 18px);
+			}
+		}
+		 .particle:nth-child(9) {
+			 animation: particle-animation-9 60s infinite;
+			 opacity: 0.65;
+			 height: 7px;
+			 width: 7px;
+			 animation-delay: -1.8s;
+			 transform: translate3d(3vw, 9vh, 91px);
+			 background: #d9263e;
+		}
+		 @keyframes particle-animation-10 {
+			 100% {
+				 transform: translate3d(8vw, 85vh, 99px);
+			}
+		}
+		 .particle:nth-child(10) {
+			 animation: particle-animation-10 60s infinite;
+			 opacity: 0.52;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -2s;
+			 transform: translate3d(53vw, 40vh, 16px);
+			 background: #d92650;
+		}
+		 @keyframes particle-animation-11 {
+			 100% {
+				 transform: translate3d(41vw, 57vh, 16px);
+			}
+		}
+		 .particle:nth-child(11) {
+			 animation: particle-animation-11 60s infinite;
+			 opacity: 0.83;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -2.2s;
+			 transform: translate3d(37vw, 2vh, 27px);
+			 background: #d95026;
+		}
+		 @keyframes particle-animation-12 {
+			 100% {
+				 transform: translate3d(79vw, 27vh, 59px);
+			}
+		}
+		 .particle:nth-child(12) {
+			 animation: particle-animation-12 60s infinite;
+			 opacity: 0.86;
+			 height: 7px;
+			 width: 7px;
+			 animation-delay: -2.4s;
+			 transform: translate3d(35vw, 46vh, 18px);
+			 background: #26d9be;
+		}
+		 @keyframes particle-animation-13 {
+			 100% {
+				 transform: translate3d(32vw, 3vh, 51px);
+			}
+		}
+		 .particle:nth-child(13) {
+			 animation: particle-animation-13 60s infinite;
+			 opacity: 0.24;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -2.6s;
+			 transform: translate3d(84vw, 54vh, 78px);
+			 background: #d92629;
+		}
+		 @keyframes particle-animation-14 {
+			 100% {
+				 transform: translate3d(17vw, 17vh, 43px);
+			}
+		}
+		 .particle:nth-child(14) {
+			 animation: particle-animation-14 60s infinite;
+			 opacity: 0.86;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -2.8s;
+			 transform: translate3d(51vw, 56vh, 56px);
+			 background: #47d926;
+		}
+		 @keyframes particle-animation-15 {
+			 100% {
+				 transform: translate3d(66vw, 80vh, 19px);
+			}
+		}
+		 .particle:nth-child(15) {
+			 animation: particle-animation-15 60s infinite;
+			 opacity: 0.84;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -3s;
+			 transform: translate3d(45vw, 9vh, 31px);
+			 background: #53d926;
+		}
+		 @keyframes particle-animation-16 {
+			 100% {
+				 transform: translate3d(16vw, 5vh, 71px);
+			}
+		}
+		 .particle:nth-child(16) {
+			 animation: particle-animation-16 60s infinite;
+			 opacity: 0.45;
+			 height: 7px;
+			 width: 7px;
+			 animation-delay: -3.2s;
+			 transform: translate3d(6vw, 44vh, 20px);
+			 background: #8ed926;
+		}
+		 @keyframes particle-animation-17 {
+			 100% {
+				 transform: translate3d(75vw, 38vh, 39px);
+			}
+		}
+		 .particle:nth-child(17) {
+			 animation: particle-animation-17 60s infinite;
+			 opacity: 0.91;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -3.4s;
+			 transform: translate3d(38vw, 41vh, 30px);
+			 background: #5c26d9;
+		}
+		 @keyframes particle-animation-18 {
+			 100% {
+				 transform: translate3d(1vw, 16vh, 83px);
+			}
+		}
+		 .particle:nth-child(18) {
+			 animation: particle-animation-18 60s infinite;
+			 opacity: 0.56;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -3.6s;
+			 transform: translate3d(5vw, 16vh, 95px);
+			 background: #d926a3;
+		}
+		 @keyframes particle-animation-19 {
+			 100% {
+				 transform: translate3d(64vw, 22vh, 42px);
+			}
+		}
+		 .particle:nth-child(19) {
+			 animation: particle-animation-19 60s infinite;
+			 opacity: 0.73;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -3.8s;
+			 transform: translate3d(13vw, 65vh, 27px);
+			 background: #d9266b;
+		}
+		 @keyframes particle-animation-20 {
+			 100% {
+				 transform: translate3d(24vw, 32vh, 60px);
+			}
+		}
+		 .particle:nth-child(20) {
+			 animation: particle-animation-20 60s infinite;
+			 opacity: 0.53;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -4s;
+			 transform: translate3d(73vw, 1vh, 31px);
+			 background: #a3d926;
+		}
+		 @keyframes particle-animation-21 {
+			 100% {
+				 transform: translate3d(80vw, 45vh, 38px);
+			}
+		}
+		 .particle:nth-child(21) {
+			 animation: particle-animation-21 60s infinite;
+			 opacity: 0.35;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -4.2s;
+			 transform: translate3d(84vw, 14vh, 88px);
+			 background: #d92697;
+		}
+		 @keyframes particle-animation-22 {
+			 100% {
+				 transform: translate3d(90vw, 46vh, 87px);
+			}
+		}
+		 .particle:nth-child(22) {
+			 animation: particle-animation-22 60s infinite;
+			 opacity: 0.67;
+			 height: 10px;
+			 width: 10px;
+			 animation-delay: -4.4s;
+			 transform: translate3d(81vw, 41vh, 83px);
+			 background: #5c26d9;
+		}
+		 @keyframes particle-animation-23 {
+			 100% {
+				 transform: translate3d(10vw, 52vh, 57px);
+			}
+		}
+		 .particle:nth-child(23) {
+			 animation: particle-animation-23 60s infinite;
+			 opacity: 0.1;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -4.6s;
+			 transform: translate3d(17vw, 52vh, 30px);
+			 background: #26b2d9;
+		}
+		 @keyframes particle-animation-24 {
+			 100% {
+				 transform: translate3d(63vw, 63vh, 100px);
+			}
+		}
+		 .particle:nth-child(24) {
+			 animation: particle-animation-24 60s infinite;
+			 opacity: 0.63;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -4.8s;
+			 transform: translate3d(20vw, 8vh, 69px);
+			 background: #9dd926;
+		}
+		 @keyframes particle-animation-25 {
+			 100% {
+				 transform: translate3d(52vw, 15vh, 69px);
+			}
+		}
+		 .particle:nth-child(25) {
+			 animation: particle-animation-25 60s infinite;
+			 opacity: 0.3;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -5s;
+			 transform: translate3d(37vw, 11vh, 98px);
+			 background: #d926a9;
+		}
+		 @keyframes particle-animation-26 {
+			 100% {
+				 transform: translate3d(6vw, 10vh, 75px);
+			}
+		}
+		 .particle:nth-child(26) {
+			 animation: particle-animation-26 60s infinite;
+			 opacity: 0.87;
+			 height: 9px;
+			 width: 9px;
+			 animation-delay: -5.2s;
+			 transform: translate3d(38vw, 78vh, 16px);
+			 background: #26d9b5;
+		}
+		 @keyframes particle-animation-27 {
+			 100% {
+				 transform: translate3d(43vw, 73vh, 40px);
+			}
+		}
+		 .particle:nth-child(27) {
+			 animation: particle-animation-27 60s infinite;
+			 opacity: 0.18;
+			 height: 7px;
+			 width: 7px;
+			 animation-delay: -5.4s;
+			 transform: translate3d(28vw, 39vh, 32px);
+			 background: #264dd9;
+		}
+		 @keyframes particle-animation-28 {
+			 100% {
+				 transform: translate3d(56vw, 70vh, 45px);
+			}
+		}
+		 .particle:nth-child(28) {
+			 animation: particle-animation-28 60s infinite;
+			 opacity: 0.62;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -5.6s;
+			 transform: translate3d(11vw, 89vh, 81px);
+			 background: #d926b8;
+		}
+		 @keyframes particle-animation-29 {
+			 100% {
+				 transform: translate3d(63vw, 82vh, 44px);
+			}
+		}
+		 .particle:nth-child(29) {
+			 animation: particle-animation-29 60s infinite;
+			 opacity: 0.89;
+			 height: 6px;
+			 width: 6px;
+			 animation-delay: -5.8s;
+			 transform: translate3d(47vw, 86vh, 12px);
+			 background: #cad926;
+		}
+		 @keyframes particle-animation-30 {
+			 100% {
+				 transform: translate3d(57vw, 29vh, 41px);
+			}
+		}
+		 .particle:nth-child(30) {
+			 animation: particle-animation-30 60s infinite;
+			 opacity: 0.55;
+			 height: 8px;
+			 width: 8px;
+			 animation-delay: -6s;
+			 transform: translate3d(89vw, 45vh, 72px);
+			 background: #26c4d9;
+		}
+	    
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.scroller::-webkit-scrollbar {
+		  display: none;
+		}
+
+		/* Hide scrollbar for IE, Edge and Firefox */
+		.scroller {
+		  -ms-overflow-style: none;  /* IE and Edge */
+		  scrollbar-width: none;  /* Firefox */
+		}
+
+    </style>
 </head>
 <body>
-  <div class="profile-section">
-    <h1>My Profile</h1>
-    <h2>About Me</h2>
-    <p>Hi there! My name is Sabri and I am a AI Apprentice.</p>
+    <div id="particle-container" style="height: 450px;">
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
+      <div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div><div class='particle'></div>
   </div>
-  <div class="profile-section">
-    <h2>Contact Information</h2>
-    <ul>
-      <li>Email: [Email]</li>
-      <li>Phone: [Phone Number]</li>
-      <li>Website: [Website]</li>
-    </ul>
-  </div>
-  <div class="profile-section">
-    <h2>Interests</h2>
-    <ul>
-      <li>Programming</li>
-      <li>More programming</li>
-      <li>Always programming</li>
-    </ul>
-  </div>
-  <div class="profile-section" style="text-align: center;">
-    <h2>Checkout this Face Mesh Demo</h2>
-  </div>
-  
-  
-<div class="container">    
-  <div class="row">
-    <div class="col-sm-6">
-      <div class="panel panel-danger">
-        <div class="panel-heading">Original</div>
-        <div class="panel-body"><video class="input_video"  style="width: 100%;"></video></div>
-        <div class="panel-footer"></div>
-      </div>
+    <div class="body-container">
+
+        <div id="div-welcome" class="text-center">
+	    <div class="welcome-h1">
+            <h1><span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span></h1>
+	    </div>
+	    <p class="subtitle" style="margin-bottom: 50px;">This is where i <u>try</u> to document my learning journey.</p>
+	    <div id="scroller_anchor" class="scroller_anchor"></div>
+	    <div class="scroller">
+            <ul id="main-nav" class="nav nav-tabs">
+                <li class="nav-link active">
+                    <a data-toggle="tab" class="filterbtn activetab-home" href="#home">Home</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-software" href="#software">Software</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-datascience" href="#datascience">Data Science</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-tinkering" href="#tinkering">Tinkering</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-achievements" href="#achievements">Achievements</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-hobbies" href="#hobbies">Hobbies</a>
+                </li>
+                <li class="nav-link">
+                    <a data-toggle="tab" class="filterbtn activetab-philosophy" href="#philosophy">Philosophy</a>
+                </li>
+            </ul>
+	    </div>
+        </div>
+	<hr>
+        <div class="tab-content text-center">
+            <div id="home" class="tab-pane fade in active">
+
+                <div id="div-personal">
+                    <div id="profileimg" class="circle" style="background-image:url(https://sabribinmansor.s3.ap-southeast-1.amazonaws.com/profile.jpg);border-radius: 50%; height: 150px; width: 150px; background-size: cover; margin: auto;"></div>
+                    <!--<h2>SABRI BIN MANSOR</h2>-->
+                </div>
+
+
+                <div id="div-about">
+		    <div class="about-header">
+                    <h3>About Me</h3>
+                    <p>Hey there, you can call me Sabri. Welcome to my website.</p>
+		    </div>
+		    <p>
+			<br>This website started as an initiative for me to practise
+			what I have learnt about web development so far #01/06/2020.
+			Being a curious and inquisitive minded person, I sometimes have trouble keeping up with the things I have learnt. haha.
+			So.. this website serves as an effort to document my many adventures too. Thank you for visiting!
+                    </p>
+                </div>
+
+		<hr>
+
+		<div id="div-connect">
+                    <h3>Connect</h3>
+                    <h4><a href="mailto:sabribinmansor@gmail.com">sabribinmansor@gmail.com</a></h4>
+                    <p><a href="https://github.com/sabribinmansor" target="_blank"><i class="fa fa-github"></i></a><span style="margin:0 20px;"> | </span><a href="https://linkedin.com/in/sabri-mansor"><i class="fa fa-linkedin-square"></i></a></p>
+                </div>
+            </div> <!-- end tab home -->
+
+            <div id="software" class="tab-pane fade"><div id="div-software">
+
+            </div></div> <!-- end tab software -->
+
+            <div id="datascience" class="tab-pane fade"><div id="div-datascience">
+
+            </div></div> <!-- end tab data science -->
+
+            <div id="tinkering" class="tab-pane fade"><div id="div-tinkering">
+
+            </div></div> <!-- end tab tinkering -->
+
+            <div id="achievements" class="tab-pane fade"><div id="div-achievements">
+
+            </div></div> <!-- end tab achievements -->
+
+            <div id="hobbies" class="tab-pane fade"><div id="div-hobbies">
+                
+            </div></div> <!-- end tab hobbies -->
+
+            <div id="philosophy" class="tab-pane fade"><div id="div-philosophy">
+                
+            </div></div> <!-- end tab philosopy -->
+
+        </div> <!-- end tab-content -->
+	<div class="footer text-center"><p>&copy; 2021. All Rights Reserved.</p></div>
     </div>
-    <div class="col-sm-6"> 
-      <div class="panel panel-primary">
-        <div class="panel-heading">Face Mesh</div>
-        <div class="panel-body"><canvas class="faceMesh_canvas" width="1280px" height="720px" style="width: 100%;"></canvas></div>
-        <div class="panel-footer"></div>
-      </div>
-    </div>
-  </div>
-</div><br><br>
 
-  
-  
-  <script>
+	<script>
+		// nav bar function - credits https://www.virendrachandak.com/techtalk/make-a-div-stick-to-top-when-scrolled-to/
+    var base_color = 'rgb(0, 26, 66)';
+		var active_color = 'rgb(0, 26, 66)';
+		$(window).scroll(function(e) {
+		    var scroller_anchor = $(".scroller_anchor").offset().top;
+		    if ($(this).scrollTop() >= scroller_anchor && $('.scroller').css('position') != 'fixed')
+		    {
+		        $('.scroller').css({ 'background': active_color, 'position': 'fixed','top': '0px' });
+		        $('.scroller_anchor').css('height', '62px');
+		    }
+		    else if ($(this).scrollTop() < scroller_anchor && $('.scroller').css('position') != 'relative')
+		    {
+		        $('.scroller_anchor').css('height', '0px');
+		        $('.scroller').css({ 'background': base_color, 'position': 'relative' });
+		    }
+		});
+		
+	    	$(function(){
+	      		$("#div-software").load("tab_software.html"); 
+	      		$("#div-datascience").load("tab_datascience.html"); 
+	      		$("#div-tinkering").load("tab_tinkering.html"); 
+	      		$("#div-achievements").load("tab_achievements.html"); 
+	      		$("#div-hobbies").load("tab_hobbies.html"); 
+	      		$("#div-philosophy").load("tab_philosophy.html"); 
+		});
+		
+		$(document).ready(function(){
 
-    const videoElement = document.getElementsByClassName('input_video')[0];  
-    const faceMeshElement = document.getElementsByClassName('faceMesh_canvas')[0];
-    const faceMeshCtx = faceMeshElement.getContext('2d');
+		    $(".filterbtn").on("click", function(){
 
-    function onFMResults(results) {
+		      document.getElementById("scroller_anchor").scrollIntoView({behavior: "smooth"});
+			    
+		      var className = $(this).attr('class');
+		      var newval = className.split("activetab-")[1];
+		      var newval = newval.split(" ")[0];
 
-      
-      faceMeshCtx.save();
-      faceMeshCtx.clearRect(0, 0, faceMeshElement.width, faceMeshElement.height);
-      faceMeshCtx.drawImage(
-          results.image, 0, 0, faceMeshElement.width, faceMeshElement.height);
-      if (results.multiFaceLandmarks) {
-        for (const landmarks of results.multiFaceLandmarks) {
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_TESSELATION,
-                         {color: '#C0C0C070', lineWidth: 1});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYE, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_EYEBROW, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_RIGHT_IRIS, {color: '#FF3030'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYE, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_EYEBROW, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LEFT_IRIS, {color: '#30FF30'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_FACE_OVAL, {color: '#E0E0E0'});
-          drawConnectors(faceMeshCtx, landmarks, FACEMESH_LIPS, {color: '#E0E0E0'});
-        }
-      }
-      faceMeshCtx.restore();
-    }
+		      var url = new URL(window.location.href);
+		      var query_string = url.search;
+		      var search_params = new URLSearchParams(query_string); 
 
-    const faceMesh = new FaceMesh({locateFile: (file) => {
-      return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
-    }});
-    faceMesh.setOptions({
-      maxNumFaces: 1,
-      refineLandmarks: true,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5
-    });
-    faceMesh.onResults(onFMResults);
+		      search_params.delete('tab');
+		      search_params.append('tab', newval);
+
+		      // change the search property of the main url
+		      url.search = search_params.toString();
+
+		      // the new url string
+		      var new_url = url.toString();
+		      window.history.pushState({}, null, new_url);
+		      
+		    });
+
+		    url = new URL(window.location.href);
+		    if (url.searchParams.get('tab')) {
+			activetab = url.searchParams.get('tab');
+			document.getElementsByClassName("activetab-"+activetab)[0].click();
+		    }
 
 
-    var camera = new Camera(videoElement, { onFrame: async () => { await faceMesh.send({image: videoElement});}, width: 1280, height: 720 });
-    camera.start();
-  </script>
-  
-  
-  
+		});
+
+
+	</script>
+
 </body>
 </html>
