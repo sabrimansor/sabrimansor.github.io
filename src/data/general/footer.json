@@ -1,0 +1,13 @@
+{
+    "id": "footer-data",
+    "section": "footer-section",
+    "copyright_text": "All Rights Reserved.</a>",
+    "logo": [
+        {
+            "src": "../images/logo/profile_pic.jpg"
+        },
+        {
+            "src": "../images/logo/profile_pic-white.jpg"
+        }
+    ]
+}

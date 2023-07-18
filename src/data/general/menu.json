@@ -1,0 +1,16 @@
+{
+    "id": "main-menu",
+    "section": "menu-section",
+    "menu": [
+        {
+            "id": 1,
+            "text": "Home",
+            "path": "home"
+        },
+        {
+            "id": 2,
+            "text": "Projects",
+            "path": "projects"
+        }
+    ]
+}

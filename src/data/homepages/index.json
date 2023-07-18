@@ -1,0 +1,52 @@
+{
+    "title": "index-home",
+    "content": [
+        {
+            "id": "index-home-header-image",
+            "section": "header-image-section",
+            "images": [
+                {
+                    "src": "../images/bg/main-banner-tech.jpeg",
+                    "alt": "Personal Portfolio Images"
+                }
+            ]
+        },
+        {
+            "id": "index-home-blog",
+            "section": "blog-section",
+            "section_title": {
+                "title": "",
+                "subtitle": "Featured Past & Present Experience"
+            }
+        },
+        {
+            "id": "index-home-bio",
+            "section": "bio-section",
+            "headings": [
+                {
+                    "content": "Sabri Mansor"
+                },
+                {
+                    "content": "Software Engineer"
+                },
+                {
+                    "content": "AI • Cloud • Web • Mobile"
+                }
+            ],
+            "texts": [
+                {
+                    "content": "I aspire to be more and strive to use my knowledge of software development to build scalable software that improves people's lives."
+                },
+                {
+                    "content": "Currently residing in Singapore. Do connect with me on my social media platforms."
+                }
+            ],
+            "images": [
+                {
+                    "src": "../images/slider/profile_pic.jpg",
+                    "alt": "Personal Portfolio Images"
+                }
+            ]
+        }
+    ]
+}
